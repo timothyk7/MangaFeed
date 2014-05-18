@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        
+        <ImageView
+           android:id="@+id/mangaMenuCover"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="20dip"
+           android:layout_centerVertical="true"
+           android:layout_centerHorizontal="true"
+           android:layout_alignParentTop="true"
+           android:contentDescription="@string/desc"/>
+
+        <TextView
+            android:layout_below = "@+id/mangaMenuCover"
+            android:id="@+id/info0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manga_name"
+            android:textStyle="bold"
+            android:layout_marginTop="20dip"/>
+        
+        <TextView
+            android:layout_below = "@+id/info0"
+            android:id="@+id/infoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@+id/infoName"/>
+        
+        <TextView
+            android:layout_below = "@+id/infoName"
+            android:id="@+id/info1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manga_author"
+            android:textStyle="bold"
+            android:layout_marginTop="15dip"/>
+        
+        <TextView
+            android:layout_below = "@+id/info1"
+            android:id="@+id/infoArthur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@+id/infoArthur"/>
+        
+        <TextView
+            android:layout_below = "@+id/infoArthur"
+            android:id="@+id/info2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manga_genre"
+            android:textStyle="bold"
+            android:layout_marginTop="15dip"/>
+        
+        <TextView
+            android:layout_below = "@+id/info2"
+            android:id="@+id/infoGenre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@+id/infoGenre"/>
+        
+        <TextView
+            android:layout_below = "@+id/infoGenre"
+            android:id="@+id/info3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manga_chapter"
+            android:textStyle="bold"
+            android:layout_marginTop="15dip"/>
+        
+        <TextView
+            android:layout_below = "@+id/info3"
+            android:id="@+id/infoChapters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@+id/infoChapters"/>
+        
+        <TextView
+            android:layout_below = "@+id/infoChapters"
+            android:id="@+id/info4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manga_status"
+            android:textStyle="bold"
+            android:layout_marginTop="15dip"/>
+        
+        <Spinner
+            android:layout_below = "@+id/info4"
+            android:id="@+id/infoStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+        <TextView
+            android:layout_below = "@+id/infoStatus"
+            android:id="@+id/info5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manga_summary"
+            android:textStyle="bold"
+            android:layout_marginTop="15dip"/>
+        
+        <TextView
+            android:layout_below = "@+id/info5"
+            android:id="@+id/infoSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@+id/infoSummary"/>
+        
+        <Button
+            android:layout_below="@+id/infoSummary"
+            android:id="@+id/infoButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            android:text="@string/add_manga"
+            />
+    </RelativeLayout >    
+
+</ScrollView>

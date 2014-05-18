@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Manga Feed</string>
+    <string name="action_settings">Settings</string>
+    <string name="search">Search</string>
+    <string name="desc">cover art</string>
+    <string name="manga_name">Manga Name:</string>
+    <string name="manga_author">Author(s):</string>
+    <string name="manga_genre">Genre(s):</string>
+    <string name="manga_chapter">Chapter(s):</string>
+    <string name="manga_status">Status:</string>
+    <string name="manga_summary">Summary:</string>
+    <string name="add_manga">Add Manga</string>
+
+</resources>

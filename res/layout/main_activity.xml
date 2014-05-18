@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <Button
+        android:id="@+id/browseButton"
+        android:layout_alignParentRight="true"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:background="@drawable/browser_button"
+        />
+        
+    <TextView 
+        android:layout_toLeftOf="@id/browseButton"
+        android:id="@+id/homeTextView"
+        android:layout_alignParentTop="true"
+        android:layout_width="fill_parent"
+        android:layout_height="35dip"
+        android:scrollHorizontally="false"
+        android:gravity="center"
+        android:textSize="18sp"/>
+    
+    <ListView
+        android:layout_below="@id/homeTextView" 
+        android:id="@+id/homeListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+    />
+    
+    
+
+</RelativeLayout>

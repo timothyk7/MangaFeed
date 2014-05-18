@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="dexedLibs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bin/dexedLibs/jsoup-1.7.2-1147ed782f5df26f08790ed93de228d3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/bin/dexedLibs/android-support-v4-292f93fa6d41c53b089430030efedd21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/bin/dexedLibs/WakefulIntentService 1.0-20e885732a3a2fd4668ea861e5eec6fd.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
