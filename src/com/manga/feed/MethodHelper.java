@@ -221,10 +221,11 @@ public class MethodHelper {
 	      {
 	    	  //compress cover to jpeg and put into byte array
 	    	  ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+              //whether to shrink or keep same quality
 	    	  if(compress)
 	    		  manga.getCover().compress(Bitmap.CompressFormat.JPEG, COMPRESS_QUALITY, byteArrayBitmapStream);
 	    	  else
-	    		  manga.getCover().compress(Bitmap.CompressFormat.JPEG, BEST_QUALITY, byteArrayBitmapStream);
+	    		  manga.getCover().compress(Bitmap.CompressFormat.PNG, BEST_QUALITY, byteArrayBitmapStream);
 	    	  byte[] b = byteArrayBitmapStream.toByteArray();
 	    	  
 	    	  buffer = ByteBuffer.allocate(4);

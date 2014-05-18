@@ -174,6 +174,7 @@ public class MainActivity extends Activity {
 	protected void load()
 	{
 		File[] files = sdCard.listFiles();
+        int completed = 0; //check where to put mangas in between
 		for(File file: files)
 		{
 			if(file.isFile()) //check if it's a file
@@ -181,8 +182,14 @@ public class MainActivity extends Activity {
 				MangaInfoHolder manga = MethodHelper.readFile(file,res);
 				if(manga.getUpdate() == '1') //put updated manga in front
 					mangas.add(0, manga);
-				else
-					mangas.add(manga);
+				else if(manga.getStatus().equals("c")) { //add completed mangas at end
+                    mangas.add(manga);
+                    completed++;
+                }else
+					mangas.add(mangas.size() == 0 ? 0 :
+                            mangas.size() == 1 ? 1:
+                            mangas.size()-completed
+                            ,manga);
 			}
 		}
 	}
@@ -293,18 +300,18 @@ public class MainActivity extends Activity {
 		mangas.add(new MangaInfoHolder("Test 2", "me", "shounen, hi, gender", "10", "om","none",'0',null,"www.hi.com"));
 		mangas.add(new MangaInfoHolder("Test 3", "", "shounen, hi, gender", "10", "o","none",'0',cover,"www.hi.com"));
 		mangas.add(new MangaInfoHolder("Test 4", "me", "shounen, hi, gender", "10.5", "u","none",'0',cover,"www.hi.com"));
-		mangas.add(new MangaInfoHolder("© Test 5", "me", "shounen, hi, gender", "10", "c","none",'0',cover,"www.hi.com"));
+		mangas.add(new MangaInfoHolder("ï¿½ Test 5", "me", "shounen, hi, gender", "10", "c","none",'0',cover,"www.hi.com"));
 		mangas.add(new MangaInfoHolder("Test 6", "me", "shounen, hi, gender", "10", "","none",'0',cover,"www.hi.com"));
-		mangas.add(new MangaInfoHolder("© Test 7", "", "shounen, hi, gender", "10.5", "","none",'0',null,"www.hi.com"));
+		mangas.add(new MangaInfoHolder("ï¿½ Test 7", "", "shounen, hi, gender", "10.5", "","none",'0',null,"www.hi.com"));
 		
 		//update flag
 		mangas.add(new MangaInfoHolder("Test 1.1", "me", "shounen, hi, gender", "10", "c","none",'1',cover,"www.hi.com"));
 		mangas.add(new MangaInfoHolder("Test 2.1", "me", "shounen, hi, gender", "10", "om","none",'1',null,"www.hi.com"));
 		mangas.add(new MangaInfoHolder("Test 3.1", "", "shounen, hi, gender", "10", "o","none",'1',cover,"www.hi.com"));
 		mangas.add(new MangaInfoHolder("Test 4.1", "me", "shounen, hi, gender", "10.5", "u","none",'1',cover,"www.hi.com"));
-		mangas.add(new MangaInfoHolder("© Test 5.1", "me", "shounen, hi, gender", "10", "c","none",'1',cover,"www.hi.com"));
+		mangas.add(new MangaInfoHolder("ï¿½ Test 5.1", "me", "shounen, hi, gender", "10", "c","none",'1',cover,"www.hi.com"));
 		mangas.add(new MangaInfoHolder("Test 6.1", "me", "shounen, hi, gender", "10", "","none",'1',cover,"www.hi.com"));
-		mangas.add(new MangaInfoHolder("Test 7.1 ©", "", "shounen, hi, gender", "10.5", "","none",'1',null,"www.hi.com"));
+		mangas.add(new MangaInfoHolder("Test 7.1 ï¿½", "", "shounen, hi, gender", "10.5", "","none",'1',null,"www.hi.com"));
 		
 		//other cases
 		mangas.add(new MangaInfoHolder("Test 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9", 
