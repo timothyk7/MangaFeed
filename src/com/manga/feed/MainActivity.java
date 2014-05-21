@@ -157,15 +157,9 @@ public class MainActivity extends Activity {
 		//notification
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		nm.cancel(uniqueID);
-		
+
 		//start updater in background
-		AlarmManager mgr=(AlarmManager)this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-		Intent i=new Intent(this.getApplicationContext(), MangaFeedUpdateAlarm.class);
-		PendingIntent pi=PendingIntent.getBroadcast(this.getApplicationContext(), 0,i, 0);
-		mgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-				SystemClock.elapsedRealtime()+AlarmManager.INTERVAL_HOUR,
-				AlarmManager.INTERVAL_HOUR,
-				pi);
+        startService(new Intent(this,MangaFeedUpdateService.class));
 	}
 	
 	/*

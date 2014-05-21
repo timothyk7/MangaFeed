@@ -31,8 +31,19 @@
             </intent-filter>
         </activity>
         
-        <receiver android:name="com.manga.feed.MangaFeedUpdateAlarm"></receiver>
-        
+        <receiver
+                android:process=":remote"
+                android:name="com.manga.feed.MangaFeedUpdateAlarm">
+        </receiver>
+
+        <receiver
+                android:enabled="true"
+                android:name="com.manga.feed.MangaFeedAutoStart">
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <service android:name="com.manga.feed.MangaFeedUpdateService" > </service>
         
         <activity

@@ -28,7 +28,7 @@ public class MethodHelper {
 	private static final int COMPRESS_QUALITY = 100;
 	private static final int BEST_QUALITY = 75;
 	private static final int COVER_SIZE = 400;
-	
+
 	/*
 	 * Helper method used to display a pop-up
 	 * Parameters:
@@ -38,20 +38,20 @@ public class MethodHelper {
 	 *  how long the pop-up should last
 	 */
     public static void popUp(String toast, Context context, int gravity, int length) {
-		
+
 		TextView text = new TextView(context);
 		text.setText(toast);
 		popUp = Toast.makeText(context, toast, length);
 		popUp.setGravity(gravity, 0, 0);
 		popUp.show();
 	}
-    
+
     public static void endPopUp()
     {
     	if(popUp != null)
     		popUp.cancel();
     }
-    
+
     /*
      * Helper method to recursively delete files (works on folders too)
      */
@@ -61,7 +61,7 @@ public class MethodHelper {
 	            delete(child);
 	    fileOrDirectory.delete();
 	}
-	
+
 	/*
 	 * Used to shrink consecutive chapters if they exist
 	 * Ex: 1,2,3,4,7,8,9 -> 1-4,7-9
@@ -84,7 +84,7 @@ public class MethodHelper {
 			   smallest=nums.get(x);
 			   ran = true;
 			}
-			
+
 			//checking if the numbers are consecutive based on smallest
 			if(nums.get(x)<=smallest&& (x==0 || (x>0 && (nums.get(x-1)+1==nums.get(x)||nums.get(x-1)-1==nums.get(x))) || ran)){
 				smallest = nums.get(x);
@@ -98,7 +98,7 @@ public class MethodHelper {
 				smallest=nums.get(x);
 				ran = true;
 			}
-			
+
 			//before ending the loop, wrap up the shrink string
 			if(x==nums.size()-1){
 				if(smallest ==largest)
@@ -106,11 +106,11 @@ public class MethodHelper {
 				else
 				    shrink = shrink+smallest+"-"+largest;
 			}
-				
+
 		}
 		return shrink;
 	}
-	
+
 	/*
 	 * Convert the string to the start of the string being uppercase then the rest lowercase
 	 * Ex: the great gatsby -> The Great Gatsby
@@ -130,7 +130,7 @@ public class MethodHelper {
 		}
 		return convert;
 	}
-	
+
 	/*
 	 * Used to fix a title if there is an illegal character
 	 */
@@ -140,7 +140,7 @@ public class MethodHelper {
 		while(temp.indexOf("*") !=-1 || temp.indexOf("\"")!=-1|| temp.indexOf(":")!=-1|| temp.indexOf("?")!=-1
 				|| temp.indexOf("\\")!=-1|| temp.indexOf("/")!=-1|| temp.indexOf("|")!=-1|| temp.indexOf("<")!=-1
 				|| temp.indexOf(">")!=-1 || temp.indexOf(".") !=-1){
-			
+
 			num = temp.indexOf("*") !=-1 ? temp.indexOf("*")
 			: temp.indexOf("\"")!=-1 ? temp.indexOf("\"")
 			: temp.indexOf(":")!=-1 ? temp.indexOf(":")
@@ -152,7 +152,7 @@ public class MethodHelper {
 			: temp.indexOf(">")!=-1 ? temp.indexOf(">")
 			: temp.indexOf(".") !=-1 ? temp.indexOf(".")
 			:0;
-			
+
 			if(num ==0){
 			    temp = "_"+temp.substring(1);
 			}else if(num==temp.length()){
@@ -160,7 +160,7 @@ public class MethodHelper {
 			}else{
 				temp = temp.substring(0,num)+"_"+temp.substring(num+1);
 			}
-			  
+
 		}
 		return temp;
 	}
@@ -172,10 +172,10 @@ public class MethodHelper {
 	    ConnectivityManager cm =
 	        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-	    return cm.getActiveNetworkInfo() != null && 
+	    return cm.getActiveNetworkInfo() != null &&
 	       cm.getActiveNetworkInfo().isConnectedOrConnecting();
 	}
-/*********************************************************************************************************************/	
+/*********************************************************************************************************************/
 	/*
 	 * Write to a file
 	 * -updated, cover flag, size of info, information, size of cover, cover 
@@ -191,31 +191,31 @@ public class MethodHelper {
 	            e.printStackTrace();
 	        }
 		}
-		
+
 		//add data into the file
 		OutputStream out = null;
-	    ByteBuffer buffer; //used to write size of information and jpeg 
+	    ByteBuffer buffer; //used to write size of information and jpeg
 	    try {
 	      out = new BufferedOutputStream(new FileOutputStream(file));
 	      String info = manga.getTitle()+"|*|"+manga.getAuthor()+"|*|"+manga.getGenre()+"|*|"+manga.getChapter()+"|*|"+
 	    		  		manga.getStatus()+"|*|"+manga.getSummary()+"|*|"+manga.getSite()+"|*|";
-	      
+
 	      //write whether there is an update
 	      out.write(manga.getUpdate());
-	      
+
 	      //whether a cover exists
 	      if(manga.getCover() != null)
 	    	  out.write(1);
 	      else
-	    	  out.write(0);  
-	      
+	    	  out.write(0);
+
 	      //information
 	      byte [] information = info.getBytes();
 	      buffer = ByteBuffer.allocate(4);
 	      buffer.putInt(information.length);
 	      out.write(buffer.array(), 0, 4); //# of bytes for information
-	      out.write(information); //information     
-	      
+	      out.write(information); //information
+
 	      //picture
 	      if(manga.getCover() != null)
 	      {
@@ -227,13 +227,13 @@ public class MethodHelper {
 	    	  else
 	    		  manga.getCover().compress(Bitmap.CompressFormat.PNG, BEST_QUALITY, byteArrayBitmapStream);
 	    	  byte[] b = byteArrayBitmapStream.toByteArray();
-	    	  
+
 	    	  buffer = ByteBuffer.allocate(4);
 	    	  buffer.putInt(b.length);
 		      out.write(buffer.array(), 0, 4); //# of bytes for image
 	    	  out.write(b); //write image into file
 	      }
-	      
+
 	      out.flush();
 	      out.close();
 	    }catch(IOException e){
@@ -241,7 +241,7 @@ public class MethodHelper {
 	    }
 		MainActivity.logger("MethodHelper writeFile", "writing complete");
 	}
-	
+
 	/*
 	 * Read a file
 	 * -updated, cover flag, size of info, information, size of cover, cover 
@@ -258,56 +258,56 @@ public class MethodHelper {
 		char update='\0';
 	    Bitmap cover=null;
 	    String site ="";
-	    
+
 	    int coverFlag =-1; //flag whether there is a cover
 	    int sizeI = -1; //size of the info
 	    int sizeC =-1; //size of the cover art
-	    
+
 	    //create file (fix name just in case)
   		File file = new File(path.toString());
   		if (!file.exists()) {
   			Log.e("Error", "No such file exist");
 			return null;
   		}
-  		
+
   		InputStream in = null;
   		byte [] num = null;
   		byte [] info = null;
   		byte [] pic = null;
-  		
+
   		//get all the information
   		try {
   			in = new BufferedInputStream(new FileInputStream(file));
-  			
+
   			update = (char)in.read(); //update flag
-  			
+
   			coverFlag = in.read(); //cover flag
-  			
+
   			num = new byte[4];
-  			in.read(num, 0,4); 
+  			in.read(num, 0,4);
   			sizeI = byteArrayToInt(num); //size of the info string
-  			
+
   			//information
   			info = new byte[sizeI];
   			in.read(info, 0, sizeI);
-  			
+
   			if(coverFlag == 1)
   			{
   				num = new byte[4];
-  				in.read(num,0,4); 
+  				in.read(num,0,4);
   				sizeC = byteArrayToInt(num); //size of the cover
-  				
+
   			    //cover
   	  			pic = new byte[sizeC];
   	  			in.read(pic, 0, sizeC);
   			}
-  					
+
 			in.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-  		
+
   		//translate all the information
   		if(info != null)
   		{
@@ -330,20 +330,20 @@ public class MethodHelper {
 						summary = rawInfo.substring(0,i);
 					else
 						site = rawInfo.substring(0,i);
-					
+
 					rawInfo = rawInfo.substring(i+3); //update
-					
+
 				}
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
   		}
-  		
+
   		cover = coverFlag == 1 ? decodeBitmapFromByteArray(pic,COVER_SIZE,COVER_SIZE) : res == null ? null:
   			decodeBitmapFromResource(res, R.drawable.noimage, COVER_SIZE,COVER_SIZE); //decode picture
-  		
-  		
+
+
   		MainActivity.logger("1 MethodHelper readFile", "Reading complete- title: "+title+
   				"| author: "+author);
   		MainActivity.logger("2 MethodHelper readFile","genre: "+genre);
@@ -354,7 +354,7 @@ public class MethodHelper {
   		MainActivity.logger("...","...");//space
 		return new MangaInfoHolder(title, author,genre,chapter,status,summary,update,cover,site);
 	}
-	
+
 	/*
 	 * Used to get images stored on the app, like no cover art
 	 */
@@ -373,7 +373,7 @@ public class MethodHelper {
 	    options.inJustDecodeBounds = false;
 	    return BitmapFactory.decodeResource(res, resId, options);
 	}
-	
+
 	/*
 	 * Used to get images stored in a byte array
 	 */
@@ -391,7 +391,7 @@ public class MethodHelper {
 	    options.inJustDecodeBounds = false;
 	    return BitmapFactory.decodeByteArray(pic, 0, pic.length,options);
 	}
-	
+
 	/*
 	 * Helper for testing, decodes an image file
 	 */
@@ -407,7 +407,7 @@ public class MethodHelper {
 	    options.inJustDecodeBounds = false;
 	    return BitmapFactory.decodeFile(file,options);
 	}
-	
+
 	/*
 	 * Used for calculating how to scale image
 	 */
@@ -427,11 +427,11 @@ public class MethodHelper {
     }
     return inSampleSize;
    }
-	
+
    /*
     * conversion used in readfile
     */
-   private static int byteArrayToInt(byte[] b) 
+   private static int byteArrayToInt(byte[] b)
    {
 	    int value = 0;
 	    for (int i = 0; i < 4; i++) {
