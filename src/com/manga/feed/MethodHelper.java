@@ -255,7 +255,7 @@ public class MethodHelper {
 		String chapter="";
 		String status = "u"; //o = ongoing | om = ongoing (monthly) | c = complete | u = unknown -> default u
 		String summary="";
-		char update='\0';
+		char update='0';
 	    Bitmap cover=null;
 	    String site ="";
 
