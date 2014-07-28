@@ -5,6 +5,11 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 
+import android.database.Cursor;
+import android.net.Uri;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
 import com.manga.feed.MainActivity;
 import com.manga.feed.MangaInfoHolder;
 import com.manga.feed.MethodHelper;
@@ -19,8 +24,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
@@ -39,7 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class Browser extends FragmentActivity implements ActionBar.TabListener {
+public class Browser extends FragmentActivity implements ActionBar.TabListener, LoaderCallbacks<Cursor>{
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -56,7 +61,11 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener {
 	 */
 	private ViewPager mViewPager;
 	
-	//private String key = "MANGAPANDA"; //used to get correct manga ************************** change
+	public static String key = "MANGAPANDA"; //used to get correct manga ************************** change
+
+    private static mangaDatabase db;
+
+    private SimpleCursorAdapter mCursorAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +110,13 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener {
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+
+        // Defining CursorAdapter for the ListView
+        mCursorAdapter = new SimpleCursorAdapter(getBaseContext(),
+                android.R.layout.simple_list_item_1,
+                null,
+                new String[] { SearchManager.SUGGEST_COLUMN_TEXT_1},
+                new int[] { android.R.id.text1}, 0);
 	}
 
 	/*
@@ -109,80 +125,46 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    getMenuInflater().inflate(R.menu.browser, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 	    MenuItem searchItem = menu.findItem(R.id.action_search);
 	    SearchView searchView = (SearchView) searchItem.getActionView();
-	    /*
-	    //get data from the query
+
+//	    //get data from the query
 	    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener( ) {
 
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				// TODO Auto-generated method stub
-				return false;
-			}
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
 
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				// TODO Auto-generated method stub
-				//add search manga in listview
-				if(query.length() <=4) //done to prevent long search
-					return false;
-				ArrayList<MangaInfoHolder> mangas = MainActivity.browser.get(key.toUpperCase());
-				
-				Log.i("hello", mangas+ " ");
-				ArrayList<MangaInfoHolder> search = new ArrayList<MangaInfoHolder>();
-				for(int x =0; mangas != null && x<mangas.size(); x++) //add mangas based on search
-				{
-					if(!mangas.get(x).getSite().equals("") 
-							&& mangas.get(x).getTitle().toLowerCase().indexOf(query.toLowerCase()) != -1)
-						search.add(mangas.get(x));
-				}
-				//Unique dialog generated every time you search
-				final Dialog dialog= new Dialog(Browser.this);
-		        LayoutInflater inflater = getLayoutInflater();
-		        View convertView = (View) inflater.inflate(R.layout.browser_listview, null);
-		        dialog.setContentView(convertView);
-		        dialog.setTitle("Search");
-		        
-		        //reuse browser code of main listview
-		        ListView lv = (ListView) convertView.findViewById(R.id.search_listview);
-		        final Browser_BaseAdapter searchAdapter = new Browser_BaseAdapter(lv.getContext(),mangas);
-		        lv.setAdapter(searchAdapter);
-		        lv.setFastScrollAlwaysVisible(true);
-		        lv.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return onSearchRequested();
+            }
+        });
 
-					@Override
-					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-							long arg3) {
-						   //Log.e("r",adapter.getData().get(arg2).getSite());
-						   MangaInfoHolder manga= searchAdapter.getData().get(arg2);
-						   mangasite searchSite = new mangapanda(); //NEED TO CHANGE********************
-						   searchSite.gotoSite(arg1.getContext(), manga);
-						   dialog.cancel();
-					}
-				});
-		        
-		        //button for close dialog
-		        Button button = (Button) convertView.findViewById(R.id.search_button);
-		        button.setText("Close");
-		        button.setOnClickListener(new View.OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						dialog.cancel();
-					}
-				});
-		        dialog.show();
-				return false;
-			}
-	        
-	    });
-	    */
 	    return super.onCreateOptionsMenu(menu);
 	}
 
-	@Override
+    /** This method is invoked by initLoader() */
+    @Override
+    public Loader<Cursor> onCreateLoader(int arg0, Bundle data) {
+        Log.i("oncreateload", "idk");
+        Uri uri = MangaContentProvider.CONTENT_URI;
+        return new CursorLoader(getBaseContext(), uri, null, null , new String[]{data.getString("query")}, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        mCursorAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+
+    }
+
+    @Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 		// When the given tab is selected, switch to the corresponding page in
@@ -318,7 +300,7 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener {
 			//listview
 			list = (ListView)rootView.findViewById(R.id.browser_listview);
 			adapter = new Browser_BaseAdapter(rootView.getContext(),new ArrayList<MangaInfoHolder>()/*holder*/);
-			site.getManga(rootView.getContext(), adapter); //load the data into the adapter
+			db = site.getManga(rootView.getContext(), adapter); //load the data into the adapter
 			list.setAdapter(adapter);
 			
 			//separator popup

@@ -13,5 +13,7 @@
     <string name="manga_status">Status:</string>
     <string name="manga_summary">Summary:</string>
     <string name="add_manga">Add Manga</string>
+    <string name="search_hint">Search mangas</string>
+    <string name="search_settings">Search Mangas</string>
 
 </resources>
