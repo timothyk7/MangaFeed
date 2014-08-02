@@ -52,7 +52,7 @@ public class mangapanda implements mangasite{
 	private mangaDatabase data;
 
 	@Override
-	public void getManga(Context c, Browser_BaseAdapter adapter) {
+	public mangaDatabase getManga(Context c, Browser_BaseAdapter adapter) {
 		data= new mangaDatabase(c,KEY);
 		data.open();
 		ArrayList<MangaInfoHolder> mangas = data.getAllMangas(); // MainActivity.browser.get(KEY);
@@ -63,7 +63,7 @@ public class mangapanda implements mangasite{
 			MainActivity.browser.put(KEY, mangas); //put into hashmap for storage
 			adapter.addAllItem(mangas);
 		}
-			
+		return data;
 	}
 
 	@Override

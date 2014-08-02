@@ -19,6 +19,7 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="Android API 19 Platform" project-jdk-type="Android SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
+<<<<<<< HEAD
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
@@ -130,5 +131,7 @@
       </state>
     </states>
   </component>
+=======
+>>>>>>> b7fc99eb9181a2da08938a71a5a2a0252ee62de2
 </project>
 
