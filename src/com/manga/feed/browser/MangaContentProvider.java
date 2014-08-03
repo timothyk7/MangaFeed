@@ -23,6 +23,7 @@ public class MangaContentProvider extends ContentProvider {
     UriMatcher mUriMatcher = buildUriMatcher();
 
     private UriMatcher buildUriMatcher(){
+        Log.i("CountryContentProvider", "build");
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         // Suggestion items of Search Dialog is provided by this uri

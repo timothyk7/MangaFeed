@@ -27,6 +27,7 @@ public class mangaDatabase {
     private HashMap<String, String> mAliasMap;
 
     public mangaDatabase(Context context, String name) {
+        Log.i("mangaDatabase", "constructor");
         dbHelper = new mangaSQLiteHelper(context,name);
         this.name = name;
         // This HashMap is used to map table fields to Custom Suggestion fields
@@ -40,6 +41,8 @@ public class mangaDatabase {
 
         // This value will be appended to the Intent data on selecting an item from Search result or Suggestions ( Optional )
         mAliasMap.put( SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID, mangaSQLiteHelper.COLUMN_ID + " as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID );
+
+        Log.i("mangaDB", mAliasMap.toString());
     }
 
     public void open() throws SQLException {
@@ -54,6 +57,7 @@ public class mangaDatabase {
     * Create manga that will go into the database
     */
     public void createManga(String title, String status, String site) {
+        Log.i("mangaDataBase", "created");
     ContentValues values = new ContentValues(); //put values to be stored in query
     values.put(mangaSQLiteHelper.COLUMN_TITLE, title);
     values.put(mangaSQLiteHelper.COLUMN_STATUS, status);

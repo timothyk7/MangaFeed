@@ -106,7 +106,7 @@ public class mangapanda implements mangasite{
 			if(MainActivity.DEVELOPMENT)
 				start = System.nanoTime();
 			
-			progress = ProgressDialog.show(c, "","Loading...", true);
+			progress = ProgressDialog.show(c, "","Retrieving Manga...", true);
 			super.onPreExecute();
 		}
 		

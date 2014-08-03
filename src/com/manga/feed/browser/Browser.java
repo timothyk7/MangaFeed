@@ -124,12 +124,14 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener, 
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    getMenuInflater().inflate(R.menu.browser, menu);
+        getMenuInflater().inflate(R.menu.browser, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-	    MenuItem searchItem = menu.findItem(R.id.action_search);
-	    SearchView searchView = (SearchView) searchItem.getActionView();
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
 
-//	    //get data from the query
+	    //get data from the query
 	    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener( ) {
 
             @Override
@@ -139,7 +141,8 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener, 
 
             @Override
             public boolean onQueryTextChange(String s) {
-                return onSearchRequested();
+                Log.i("searched", s);
+                return false;
             }
         });
 

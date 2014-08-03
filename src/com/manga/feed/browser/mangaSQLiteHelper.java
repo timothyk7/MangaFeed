@@ -33,6 +33,7 @@ public class mangaSQLiteHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		// TODO Auto-generated method stub
+        Log.i("mangaSQLite", "constructor");
 		database.execSQL(DATABASE_CREATE);
 	}
 
