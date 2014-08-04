@@ -237,7 +237,7 @@ public class mangapanda implements mangasite{
 			//debugging
 			if(MainActivity.DEVELOPMENT)
 				start = System.nanoTime();
-			
+
 			progress = ProgressDialog.show(c, "","Loading...", true);
 			super.onPreExecute();
 		}
@@ -419,7 +419,7 @@ public class mangapanda implements mangasite{
 				MangaInfo.showButton = checkMangaExist(manga.getTitle()) ? false: true;
 				c.startActivity(myIntent);
 			}
-			
+
 			progress.cancel();
 		}
 		

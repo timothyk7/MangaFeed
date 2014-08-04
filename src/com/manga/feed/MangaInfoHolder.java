@@ -105,5 +105,20 @@ public class MangaInfoHolder implements Comparable<Object>{
 		// TODO Auto-generated method stub
 		return title.toUpperCase().compareTo(((MangaInfoHolder)arg0).getTitle().toUpperCase());
 	}
-	
+
+    @Override
+    public String toString() {
+        return "MangaInfoHolder{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", genre='" + genre + '\'' +
+                ", chapter='" + chapter + '\'' +
+                ", status='" + status + '\'' +
+                ", summary='" + summary + '\'' +
+                ", update=" + update +
+                ", cover=" + cover +
+                ", site='" + site + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

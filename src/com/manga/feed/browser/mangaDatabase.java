@@ -16,6 +16,7 @@ import android.util.Log;
 public class mangaDatabase {
 	
     // Database fields
+    private ArrayList<MangaInfoHolder> mangas;
     private SQLiteDatabase database;
     private mangaSQLiteHelper dbHelper;
     private String name; //table for database
@@ -69,27 +70,31 @@ public class mangaDatabase {
     }
 
     public ArrayList<MangaInfoHolder> getAllMangas() {
-        ArrayList<MangaInfoHolder> mangas = new ArrayList<MangaInfoHolder>();
+        if (mangas != null)
+            return mangas;
+        else {
+            mangas = new ArrayList<MangaInfoHolder>();
 
-        Cursor cursor = database.query(name,
-            allColumns, null, null, null, null, null);
+            Cursor cursor = database.query(name,
+                    allColumns, null, null, null, null, null);
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-          MangaInfoHolder manga = cursorToManga(cursor);
-          mangas.add(manga);
-          cursor.moveToNext();
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                MangaInfoHolder manga = cursorToManga(cursor);
+                mangas.add(manga);
+                cursor.moveToNext();
+            }
+            // make sure to close the cursor
+            cursor.close();
+            Collections.sort(mangas);
+            return mangas;
         }
-        // make sure to close the cursor
-        cursor.close();
-        Collections.sort(mangas);
-        return mangas;
     }
 
     /*
      * Helper that will create the manga and assign an unique id
      */
-    private MangaInfoHolder cursorToManga(Cursor cursor) {
+    public MangaInfoHolder cursorToManga(Cursor cursor) {
         MangaInfoHolder manga = new MangaInfoHolder();
         //initialize data in the manga
         manga.setId(cursor.getLong(0));
@@ -136,7 +141,7 @@ public class mangaDatabase {
 
         Cursor c = queryBuilder.query(dbHelper.getReadableDatabase(),
                 new String[] { "_id", "title", "status", "site" } ,
-                "_id = ?", new String[] { id } , null, null, null ,"1"
+                "title = ?", new String[] { id } , null, null, null ,"1"
         );
 
         return c;

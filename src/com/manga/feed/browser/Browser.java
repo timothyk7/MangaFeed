@@ -5,11 +5,13 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.widget.*;
 import com.manga.feed.MainActivity;
 import com.manga.feed.MangaInfoHolder;
 import com.manga.feed.MethodHelper;
@@ -35,13 +37,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class Browser extends FragmentActivity implements ActionBar.TabListener, LoaderCallbacks<Cursor>{
@@ -64,8 +59,6 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener, 
 	public static String key = "MANGAPANDA"; //used to get correct manga ************************** change
 
     private static mangaDatabase db;
-
-    private SimpleCursorAdapter mCursorAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,13 +103,6 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener, 
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
-
-        // Defining CursorAdapter for the ListView
-        mCursorAdapter = new SimpleCursorAdapter(getBaseContext(),
-                android.R.layout.simple_list_item_1,
-                null,
-                new String[] { SearchManager.SUGGEST_COLUMN_TEXT_1},
-                new int[] { android.R.id.text1}, 0);
 	}
 
 	/*
@@ -127,22 +113,35 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener, 
         getMenuInflater().inflate(R.menu.browser, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-
-	    //get data from the query
-	    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener( ) {
-
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        //Selecting Item in query
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onSuggestionSelect(int i) {
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                Log.i("searched", s);
-                return false;
+            public boolean onSuggestionClick(int i) {
+                Cursor cursor = searchView.getSuggestionsAdapter().getCursor();
+                String searchName = cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1)));
+                ArrayList<MangaInfoHolder> search = db.getAllMangas();
+                MangaInfoHolder manga = null;
+                //DEFINITELY CHANGE :(
+                for (MangaInfoHolder m: search)
+                {
+                    if(m.getTitle().equals(searchName))
+                    {
+                        manga = m;
+                        break;
+                    }
+                }
+                if (manga == null)
+                    return false;
+                mangasite site = new mangapanda();
+                site.gotoSite(mViewPager.getContext(), manga);
+                return true;
             }
         });
 
@@ -159,7 +158,7 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener, 
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        mCursorAdapter.swapCursor(cursor);
+
     }
 
     @Override
