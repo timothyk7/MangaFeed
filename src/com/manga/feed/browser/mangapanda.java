@@ -349,11 +349,13 @@ public class mangapanda implements mangasite{
 						  break;
 					  
 				  }
+                summary = summary.replaceAll("&quot;", "\"").replaceAll("\\\\","");
+
 				  //DEBUG
 				  MainActivity.logger("GetManga 1", "Author: "+author+"| status: "+status);
 				  MainActivity.logger("GetManga 2", "Genre: "+genre+"| Chapter: "+chapter+"| cover exist: "+(cover != null));
 				  MainActivity.logger("GetManga 3", "Summary: "+summary);
-				  
+
 				  //set remaining variables
 				  manga.setAuthor(author);
 				  manga.setChapter(chapter);
@@ -361,7 +363,7 @@ public class mangapanda implements mangasite{
 				  manga.setGenre(genre);
 				  manga.setCover(cover);
 				  manga.setSummary(summary);
-				  
+
 				  read.close();
 				  in.close();
 				}catch (MalformedURLException e) {

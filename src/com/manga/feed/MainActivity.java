@@ -1,9 +1,7 @@
 package com.manga.feed;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
+import java.util.*;
 
 import com.manga.feed.browser.Browser;
 
@@ -186,7 +184,8 @@ public class MainActivity extends Activity {
                             ,manga);
 			}
 		}
-	}
+//        Collections.sort(mangas);
+    }
 	
 
 	public static int getUniID()
