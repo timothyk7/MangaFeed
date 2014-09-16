@@ -117,6 +117,8 @@ public class MangaInfo extends Activity{
 		mangaCover.setImageBitmap(manga.getCover()); //imageview
 		if(!showButton)
 			button.setVisibility(View.GONE);
+
+        MLog.v("MangaInfo","manga info loaded");
 	}
 	
 	protected void ini(){

@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.manga.feed.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,11 +31,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.manga.feed.MainActivity;
-import com.manga.feed.MangaInfo;
-import com.manga.feed.MangaInfoHolder;
-import com.manga.feed.MethodHelper;
-import com.manga.feed.R;
 import com.manga.feed.browser.Browser.SectionFragment;
 
 public class mangapanda implements mangasite{
@@ -194,10 +190,8 @@ public class mangapanda implements mangasite{
 		protected void onPostExecute(ArrayList<MangaInfoHolder> result) {
 			//debugging
 			if(MainActivity.DEVELOPMENT)
-			{
 				end = System.nanoTime();
-				MainActivity.logger("mangapanda load", "sec: "+(end-start)/1000000000.0);
-			}
+            MLog.d("mangapanda load", "sec: " + (end - start) / 1000000000.0);
 			
 			//if not online or bad url
 			if(!MethodHelper.isOnline(c) ||( status != HttpURLConnection.HTTP_ACCEPTED && status != HttpURLConnection.HTTP_OK))
@@ -352,9 +346,9 @@ public class mangapanda implements mangasite{
                 summary = summary.replaceAll("&quot;", "\"").replaceAll("\\\\","");
 
 				  //DEBUG
-				  MainActivity.logger("GetManga 1", "Author: "+author+"| status: "+status);
-				  MainActivity.logger("GetManga 2", "Genre: "+genre+"| Chapter: "+chapter+"| cover exist: "+(cover != null));
-				  MainActivity.logger("GetManga 3", "Summary: "+summary);
+				  MLog.d("GetManga 1", "Author: "+author+"| status: "+status);
+                  MLog.d("GetManga 2", "Genre: "+genre+"| Chapter: "+chapter+"| cover exist: "+(cover != null));
+                  MLog.d("GetManga 3", "Summary: "+summary);
 
 				  //set remaining variables
 				  manga.setAuthor(author);
@@ -403,12 +397,11 @@ public class mangapanda implements mangasite{
 		protected void onPostExecute(Void result) {
 			//debugging
 			if(MainActivity.DEVELOPMENT)
-			{
 				end = System.nanoTime();
-				MainActivity.logger("mangapanda getManga", "sec: "+(end-start)/1000000000.0);
-			}
-			
-			//if not online or bad url
+            MLog.d("mangapanda getManga", "sec: "+(end-start)/1000000000.0);
+
+
+            //if not online or bad url
 			if(!MethodHelper.isOnline(c) ||( status != HttpURLConnection.HTTP_ACCEPTED && status != HttpURLConnection.HTTP_OK))
 				MethodHelper.popUp("Connection Error", c, Gravity.CENTER, Toast.LENGTH_SHORT);
 			

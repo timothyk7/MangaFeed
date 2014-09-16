@@ -239,7 +239,7 @@ public class MethodHelper {
 	    }catch(IOException e){
 		    e.printStackTrace();
 	    }
-		MainActivity.logger("MethodHelper writeFile", "writing complete");
+        MLog.d("MethodHelper writeFile", "writing complete");
 	}
 
 	/*
@@ -266,7 +266,7 @@ public class MethodHelper {
 	    //create file (fix name just in case)
   		File file = new File(path.toString());
   		if (!file.exists()) {
-  			Log.e("Error", "No such file exist");
+  			MLog.e("Error", "No such file exist");
 			return null;
   		}
 
@@ -344,14 +344,14 @@ public class MethodHelper {
   			decodeBitmapFromResource(res, R.drawable.noimage, COVER_SIZE,COVER_SIZE); //decode picture
 
 
-  		MainActivity.logger("1 MethodHelper readFile", "Reading complete- title: "+title+
+  		MLog.v("1 MethodHelper readFile", "Reading complete- title: "+title+
   				"| author: "+author);
-  		MainActivity.logger("2 MethodHelper readFile","genre: "+genre);
-  		MainActivity.logger("3 MethodHelper readFile","chapter: "+chapter+"| status: "+status+
+        MLog.v("2 MethodHelper readFile","genre: "+genre);
+        MLog.v("3 MethodHelper readFile","chapter: "+chapter+"| status: "+status+
   				"| summary exists: "+(summary.length()!=0));
-  		MainActivity.logger("4 MethodHelper readFile","updated: "+(update=='1')+"| cover exists: "+(cover != null));
-  		MainActivity.logger("5 MethodHelper readFile","site: "+site);
-  		MainActivity.logger("...","...");//space
+        MLog.v("4 MethodHelper readFile","updated: "+(update=='1')+"| cover exists: "+(cover != null));
+        MLog.v("5 MethodHelper readFile","site: "+site);
+        MLog.v("...","...");//space
 		return new MangaInfoHolder(title, author,genre,chapter,status,summary,update,cover,site);
 	}
 

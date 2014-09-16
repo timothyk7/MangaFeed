@@ -151,7 +151,6 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener, 
     /** This method is invoked by initLoader() */
     @Override
     public Loader<Cursor> onCreateLoader(int arg0, Bundle data) {
-        Log.i("oncreateload", "idk");
         Uri uri = MangaContentProvider.CONTENT_URI;
         return new CursorLoader(getBaseContext(), uri, null, null , new String[]{data.getString("query")}, null);
     }
@@ -318,7 +317,6 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener, 
 				public void onScroll(AbsListView view, int firstVisibleItem,
 						int visibleItemCount, int totalItemCount) {
 					// TODO Auto-generated method stub
-					//Log.e(" ",firstVisibleItem+" "+visibleItemCount+" "+sepIndicator);
 					if(adapter != null && adapter.getData() !=null && adapter.getData().size()>0){
 						String t;
 						if(adapter.getData().get(firstVisibleItem).getGenre().equals("") && adapter.getData().get(firstVisibleItem).getTitle().length()==3)
@@ -348,7 +346,6 @@ public class Browser extends FragmentActivity implements ActionBar.TabListener, 
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 						long arg3) {
-					   //Log.e("r",adapter.getData().get(arg2).getSite());
 					   if(popUp != null)
 						   popUp.cancel();
 					   MangaInfoHolder manga= adapter.getData().get(arg2);

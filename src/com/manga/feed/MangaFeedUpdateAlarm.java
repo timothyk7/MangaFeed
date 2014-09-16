@@ -97,10 +97,10 @@ public class MangaFeedUpdateAlarm extends BroadcastReceiver {
                 retry++;
             }
             if(retry >= 5){
-                Log.d("MangaFeedUpdateAlarm", "No Connection");
+                MLog.d("MangaFeedUpdateAlarm", "No Connection");
                 return;
             }
-            Log.i("MangaFeedUpdateAlarm", "checking for updates");
+            MLog.i("MangaFeedUpdateAlarm", "checking for updates");
             super.onPreExecute();
         }
 

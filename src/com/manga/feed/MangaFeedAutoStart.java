@@ -18,7 +18,7 @@ public class MangaFeedAutoStart  extends BroadcastReceiver {
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             Intent startServiceIntent = new Intent(context, MangaFeedUpdateService.class);
             context.startService(startServiceIntent);
-            Log.i("MangaFeedAutoStart", "started");
+            MLog.v("MangaFeedAutoStart", "started");
         }
     }
 }

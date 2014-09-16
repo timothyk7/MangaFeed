@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 	public static ArrayList<MangaInfoHolder> mangas;
 	public static HashMap<String, ArrayList<MangaInfoHolder>> browser; //holds the mangas so don't have to reload
 	public static ListArrayAdapter adapter;
-	public static final boolean DEVELOPMENT = false;
+    public static final boolean DEVELOPMENT = true;
 	private static final boolean TEST1 = false;
 	
 	private TextView text;
@@ -53,6 +53,8 @@ public class MainActivity extends Activity {
 	//notification manager
 	public static NotificationManager nm;
 	private static int uniqueID = 548156;
+
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +160,8 @@ public class MainActivity extends Activity {
 
 		//start updater in background
         startService(new Intent(this,MangaFeedUpdateService.class));
+
+        MLog.v("MainActivity","started MangaFeed");
 	}
 	
 	/*
@@ -182,6 +186,8 @@ public class MainActivity extends Activity {
                             mangas.size() == 1 ? 1:
                             mangas.size()-completed
                             ,manga);
+
+                MLog.v("MainActivity","Added manga: "+manga.toString());
 			}
 		}
 //        Collections.sort(mangas);
@@ -192,12 +198,6 @@ public class MainActivity extends Activity {
 	{
 		int temp = uniqueID; // so doesn't change real ID
 		return temp;
-	}
-	
-	public static void logger(String tag, String msg)
-	{
-		if(DEVELOPMENT)
-			Log.i("dev: "+tag, msg);
 	}
 	
 	
@@ -283,7 +283,7 @@ public class MainActivity extends Activity {
 		File pic = new File(sdCard+"/test/cover.jpg");
 		if(!pic.isFile())
 		{
-			Log.e("Error", "No such file exist");
+			MLog.e("Error", "No such file exist");
 			return;
 		}
 		Bitmap cover = MethodHelper.decodeBitmapFromFile(pic.toString(), 200, 200);
