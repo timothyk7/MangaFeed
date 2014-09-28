@@ -33,16 +33,16 @@ public class ListArrayAdapter extends ArrayAdapter<MangaInfoHolder> {
 		
 		//if null, create the view and create a holder else get the holder in memory 
 		if(convertView ==null){
-		LayoutInflater inflater = (LayoutInflater) context
-			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
-		convertView = inflater.inflate(R.layout.home_listrow, parent, false);
-		textView = (TextView) convertView.findViewById(R.id.info);
-		textView.setTextSize(MainActivity.screenW/40);
-		imageView = (ImageView) convertView.findViewById(R.id.mangaCover);
-		imageView.setMaxHeight(MainActivity.screenW/4);
-		imageView.setMaxWidth(MainActivity.screenW/4);
-		convertView.setTag(new Holder(imageView, textView));
+            LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            convertView = inflater.inflate(R.layout.home_listrow, parent, false);
+            textView = (TextView) convertView.findViewById(R.id.info);
+            textView.setTextSize(MainActivity.screenW/40);
+            imageView = (ImageView) convertView.findViewById(R.id.mangaCover);
+            imageView.setMaxHeight(MainActivity.screenW/4);
+            imageView.setMaxWidth(MainActivity.screenW/4);
+            convertView.setTag(new Holder(imageView, textView));
 		}else{
 			Holder holder = (Holder) convertView.getTag();
 			imageView = holder.getImage();

@@ -20,7 +20,7 @@
            android:contentDescription="@string/desc"/>
 
         <TextView
-            android:layout_below = "@+id/mangaMenuCover"
+            android:layout_below = "@id/mangaMenuCover"
             android:id="@+id/info0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,14 +29,13 @@
             android:layout_marginTop="20dip"/>
         
         <TextView
-            android:layout_below = "@+id/info0"
+            android:layout_below = "@id/info0"
             android:id="@+id/infoName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@+id/infoName"/>
+            android:layout_height="wrap_content"/>
         
         <TextView
-            android:layout_below = "@+id/infoName"
+            android:layout_below = "@id/infoName"
             android:id="@+id/info1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,14 +44,13 @@
             android:layout_marginTop="15dip"/>
         
         <TextView
-            android:layout_below = "@+id/info1"
+            android:layout_below = "@id/info1"
             android:id="@+id/infoArthur"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@+id/infoArthur"/>
+            android:layout_height="wrap_content"/>
         
         <TextView
-            android:layout_below = "@+id/infoArthur"
+            android:layout_below = "@id/infoArthur"
             android:id="@+id/info2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,14 +59,13 @@
             android:layout_marginTop="15dip"/>
         
         <TextView
-            android:layout_below = "@+id/info2"
+            android:layout_below = "@id/info2"
             android:id="@+id/infoGenre"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@+id/infoGenre"/>
+            android:layout_height="wrap_content"/>
         
         <TextView
-            android:layout_below = "@+id/infoGenre"
+            android:layout_below = "@id/infoGenre"
             android:id="@+id/info3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,14 +74,13 @@
             android:layout_marginTop="15dip"/>
         
         <TextView
-            android:layout_below = "@+id/info3"
+            android:layout_below = "@id/info3"
             android:id="@+id/infoChapters"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@+id/infoChapters"/>
+            android:layout_height="wrap_content"/>
         
         <TextView
-            android:layout_below = "@+id/infoChapters"
+            android:layout_below = "@id/infoChapters"
             android:id="@+id/info4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,13 +89,13 @@
             android:layout_marginTop="15dip"/>
         
         <Spinner
-            android:layout_below = "@+id/info4"
+            android:layout_below = "@id/info4"
             android:id="@+id/infoStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         
         <TextView
-            android:layout_below = "@+id/infoStatus"
+            android:layout_below = "@id/infoStatus"
             android:id="@+id/info5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,14 +104,13 @@
             android:layout_marginTop="15dip"/>
         
         <TextView
-            android:layout_below = "@+id/info5"
+            android:layout_below = "@id/info5"
             android:id="@+id/infoSummary"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@+id/infoSummary"/>
+            android:layout_height="wrap_content"/>
         
         <Button
-            android:layout_below="@+id/infoSummary"
+            android:layout_below="@id/infoSummary"
             android:id="@+id/infoButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
