@@ -53,7 +53,7 @@ public class ListArrayAdapter extends ArrayAdapter<MangaInfoHolder> {
 		
 		Bitmap bmp = mangas.get(position).getCover();
 		bmp = mangas.get(position).getUpdate() == '1' ?
-				overlay(bmp,MethodHelper.decodeBitmapFromResource(MainActivity.res, R.drawable.update,
+				overlay(bmp,MethodHelper.decodeBitmapFromResource(MainActivity.res, R.drawable.update_manga,
 						MainActivity.screenW/4, MainActivity.screenW/10)):
 				bmp;	
 						

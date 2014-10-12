@@ -1,16 +1,15 @@
 package com.manga.feed;
 
 import java.io.File;
+import java.net.HttpURLConnection;
+import java.text.NumberFormat;
 import java.util.*;
 
+import android.app.*;
+import android.os.AsyncTask;
+import android.view.*;
 import com.manga.feed.browser.Browser;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,9 +23,6 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -258,10 +254,110 @@ public class MainActivity extends Activity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		MethodHelper.endPopUp();
+        int x =0;
+        while(mangas.get(x).getUpdate() == '1')
+        {
+            mangas.get(x).setUpdate('0');
+            MethodHelper.writeFile(sdCard, mangas.get(x),false);
+            x++;
+        }
 		super.onBackPressed();
 	}
 
-/***************************************************************************************************************************************/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.setting_mainmenu:
+                MethodHelper.popUp("Setting",getApplicationContext(),Gravity.CENTER,Toast.LENGTH_SHORT);
+                return true;
+            case R.id.update_mainmenu:
+//                MethodHelper.popUp("Update",getApplicationContext(),Gravity.CENTER,Toast.LENGTH_SHORT);
+                new UpdateTask(this).execute(mangas.toArray(new MangaInfoHolder[mangas.size()]));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /******************************************************************************************************************/
+    /*Done to run update*/
+    private class UpdateTask extends AsyncTask<MangaInfoHolder, Integer, Integer> {
+        private Context context;
+        private ProgressDialog pDialog;
+
+        private UpdateTask(Context context) {
+            this.context = context;
+            pDialog = new ProgressDialog(context);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            //check for conectivity
+            int retry = 1;
+            while(!MethodHelper.isOnline(context) && retry <=5)
+            {
+                SystemClock.sleep(100);
+                retry++;
+            }
+            if(retry >= 5){
+                MLog.d("MangaFeedUpdateAlarm", "No Connection");
+                return;
+            }
+            MLog.i("MangaFeedUpdateAlarm", "checking for updates");
+            pDialog.setMessage("Updating");
+            pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Integer doInBackground(MangaInfoHolder... manga) {
+            int count = 0;
+            int prev = 0;
+            //update manga
+            for(int x=0; x<manga.length;x++) {
+                count += MethodHelper.update(sdCard, manga[x], context);
+                int percent = (int) (((double)(x+1)/manga.length)*100);
+                publishProgress(percent);
+                if(count > prev){
+                    prev = count;
+                    MangaInfoHolder m = manga[x];
+                    mangas.remove(m);
+                    mangas.add(0,m);
+                }
+                MLog.d("Updating", x+1+": "+percent);
+            }
+            return count;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            pDialog.setProgress(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer count) {
+            MLog.i("MangaFeedUpdateAlarm", "finished with updates");
+            //if not online
+            if(!MethodHelper.isOnline(context))
+                MethodHelper.popUp("Connection Error", context, Gravity.CENTER, Toast.LENGTH_SHORT);
+            else if(count > 0) {
+                MethodHelper.popUp("Updates are available", context, Gravity.CENTER, Toast.LENGTH_SHORT);
+                adapter.notifyDataSetChanged();
+            }
+            pDialog.cancel();
+        }
+    }
+
+    /***************************************************************************************************************************************/
 	
 	/*
 	 * Will translate different cases into binary for testload to read 

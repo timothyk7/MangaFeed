@@ -41,9 +41,11 @@ import android.content.IntentFilter;
 
 public class MangaFeedUpdateService extends Service {
     private MangaFeedUpdateAlarm alarm;
+
 	public MangaFeedUpdateService() {
 		super();
-        alarm = new MangaFeedUpdateAlarm();
+        if (alarm == null)
+            alarm = new MangaFeedUpdateAlarm();
 	}
 
     //Done to start background update
